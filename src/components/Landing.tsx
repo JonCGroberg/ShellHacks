@@ -6,7 +6,7 @@ import { BookOpen, Brain, Lightbulb, Rocket } from "lucide-react"
 
 export default function LandingPage() {
   useEffect(() => {
-    
+    console.log('Fetching data from the API...');
     fetch('http://3.147.36.237:3000/api/cards/ret-cards', {
         method: 'GET',
         headers: {
@@ -20,7 +20,7 @@ export default function LandingPage() {
     .catch(error => {
         console.error('Error during API request:', error);
     });
-}, []); 
+}, []);
   return (
     <main className="flex-grow">
       <section className="bg-gradient-to-b to-white from-white py-20">
