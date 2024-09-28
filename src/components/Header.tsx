@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { navigate } from "astro:transitions/client"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 
 const Header = () => {
     return (
@@ -52,7 +54,7 @@ const Header = () => {
                                             <NavigationMenuLink asChild>
                                                 <a
                                                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
-                                                    href="/swipes"
+                                                    href="/cards"
                                                 >
                                                     <div className="text-sm font-medium leading-none">Flashcard Swipes</div>
                                                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -118,8 +120,10 @@ const Header = () => {
               </NavigationMenuItem> */}
                         </NavigationMenuList>
                     </NavigationMenu>
+
+
                     <div className="flex items-center space-x-4">
-                        <DropdownMenu>
+                        {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="w-[70px]">
                                     EN
@@ -130,7 +134,7 @@ const Header = () => {
                                 <DropdownMenuItem>FR</DropdownMenuItem>
                                 <DropdownMenuItem>DE</DropdownMenuItem>
                             </DropdownMenuContent>
-                        </DropdownMenu>
+                        </DropdownMenu> */}
                         <Button onClick={()=> navigate("http://localhost:3000/login")} className="bg-orange-500 text-white hover:bg-orange-600">
                             Sign Up
                         </Button>
