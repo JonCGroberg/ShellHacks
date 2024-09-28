@@ -1,16 +1,13 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import DashBoardLayout from "@/layouts/DashBoardLayout.astro";
+import AppLayout from "../layouts/AppLayout.astro";
 import CardSwipe from "@/components/CardSwipe";
 ---
 
-<DashBoardLayout
+<AppLayout
 	title="Swipes"
 	description="Swipe through words to learn new languages"
 	<h1
 	class="text-4xl font-bold text-gray-800 mb-4"
-	>
-
-    <CardSwipe client:only="react" />
-
-</DashBoardLayout>
+>
+	<CardSwipe client:only="react" />
+</AppLayout>
