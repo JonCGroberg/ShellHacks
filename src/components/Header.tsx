@@ -22,7 +22,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const Header = () => {
   return (
-    <header className="bg-orange-100 py-4">
+    <header className=" py-4">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -34,7 +34,7 @@ const Header = () => {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
+                <NavigationMenuTrigger>Learning Modes</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <li className="row-span-3">
@@ -44,9 +44,22 @@ const Header = () => {
                           href="/"
                         >
                           <Globe className="h-6 w-6 text-white" />
-                          <div className="mt-4 mb-2 text-lg font-medium text-white">Popular Languages</div>
+                          <div className="mt-4 mb-2 text-lg font-medium text-white">Stats & Leaderboard</div>
                           <p className="text-sm leading-tight text-white/90">
-                            Explore our most popular language courses
+                            See where you rank among other learners and earn prizes.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
+                          href="/swipes"
+                        >
+                          <div className="text-sm font-medium leading-none">Flashcard Swipes</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Swipe through flashcards to learn new words and phrases in context.
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -57,9 +70,9 @@ const Header = () => {
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
                           href="/"
                         >
-                          <div className="text-sm font-medium leading-none">Spanish</div>
+                          <div className="text-sm font-medium leading-none">Story Scrolls</div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Learn one of the world's most spoken languages
+                            Scroll through a choose your own adventure story in context.
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -70,22 +83,9 @@ const Header = () => {
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
                           href="/"
                         >
-                          <div className="text-sm font-medium leading-none">French</div>
+                          <div className="text-sm font-medium leading-none">Personalized AI Friend</div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Discover the language of love and culture
-                          </p>
-                        </a>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <a
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
-                          href="/"
-                        >
-                          <div className="text-sm font-medium leading-none">Mandarin</div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Master the most widely spoken language in the world
+                            Practice your conversational skills with a personalized tutor.
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -93,7 +93,7 @@ const Header = () => {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -108,7 +108,7 @@ const Header = () => {
                     ))}
                   </ul>
                 </NavigationMenuContent>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
               {/* <NavigationMenuItem>
                 <NavigationMenuLink className="font-medium" href="/community">
                   Community

@@ -2,7 +2,7 @@ import Link from "../components/Link";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-100 py-8">
+    <footer className="border-t bg-slate-50 shadow py-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
