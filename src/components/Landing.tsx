@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import React, {useEffect} from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BookOpen, Brain, Lightbulb, Rocket } from "lucide-react"
 // import Image from "astro/components/Image.astro"
@@ -6,6 +7,22 @@ import { BookOpen, Brain, Lightbulb, Rocket } from "lucide-react"
 
 
 export default function LandingPage() {
+  useEffect(() => {
+    console.log('Fetching data from the API...');
+    fetch('http://3.147.36.237:3000/api/cards/ret-cards', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Dummy API Response:', data);
+    })
+    .catch(error => {
+        console.error('Error during API request:', error);
+    });
+}, []);
   return (
     <main className="flex-grow">
       <section className="bg-gradient-to-b to-white from-white py-20">

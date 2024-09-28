@@ -1,0 +1,9 @@
+---
+// src/pages/login.astro
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import FirebaseAuth from '../components/FirebaseAuth';
+---
+
+<LandingLayout>
+  <FirebaseAuth client:only="react" />
+</LandingLayout>
