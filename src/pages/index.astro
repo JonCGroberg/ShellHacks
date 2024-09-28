@@ -1,15 +1,17 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import LandingPage from "../components/Landing";
 
 const pageTitle = "Welcome to the Language Learning App";
 const pageDescription = "Start learning languages with our interactive tools.";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
-	<h1 class="text-4xl font-bold text-gray-800 mb-4">
+	<!-- <h1 class="text-4xl font-bold text-gray-800 mb-4">
 		Welcome to LinguaLeap
 	</h1>
 	<p class="text-xl text-gray-600">
 		Start your language learning journey today!
-	</p>
+	</p> -->
+	<LandingPage />
 </MainLayout>
