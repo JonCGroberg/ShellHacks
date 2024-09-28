@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
+
+
 const Header = () => {
   return (
     <header className="bg-orange-100 py-4">
@@ -27,6 +29,8 @@ const Header = () => {
             <Globe className="h-8 w-8 text-orange-500" />
             <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
           </div>
+
+
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -133,6 +137,7 @@ const Header = () => {
             <Button className="bg-orange-500 text-white hover:bg-orange-600">
               Sign Up
             </Button>
+            
             <Sheet>
               <SheetTrigger asChild>
                 <Button className="md:hidden" variant="ghost" size="icon">
@@ -157,6 +162,7 @@ const Header = () => {
               </SheetContent>
             </Sheet>
           </div>
+
         </div>
       </div>
     </header>
