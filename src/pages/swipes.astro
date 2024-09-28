@@ -1,0 +1,15 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import CardSwipe from "@/components/CardSwipe";
+---
+
+<MainLayout
+	title="Swipes"
+	description="Swipe through words to learn new languages"
+	<h1
+	class="text-4xl font-bold text-gray-800 mb-4"
+	>
+
+    <CardSwipe client:only="react" />
+
+</MainLayout>
