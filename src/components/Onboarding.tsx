@@ -10,8 +10,10 @@ function OnboardingProcess() {
   const [progressValue, setProgressValue] = useState(0); // Start at 0 progress
   const incrementAmount = 35; // Customize this value for progress bar
   const [cardContentIndex, setCardContentIndex] = useState(0); // Tracks current card content
+  const [highlightedWords, setHighlightedWords] = useState<string[]>([]); // Track highlighted words for the current card
+  const [allHighlightedWords, setAllHighlightedWords] = useState<string[]>([]); // Track all highlighted words across cards
 
-  // List of card contents that change when the "Continue" button is clicked
+  // List of card contents that change when the "Continue" button is pressed
   const cardContents = [
     "You're making great progress! Keep going to unlock more learning opportunities.",
     "You're already well on your way! Keep up the good work!",
@@ -31,30 +33,49 @@ function OnboardingProcess() {
 
   // Handles progress bar button clicks and changes card content
   function handleProgressButtonClick() {
-    setProgressValue((prevValue) => Math.min(prevValue + incrementAmount, 100));
+    // Add current highlighted words to allHighlightedWords, avoiding duplicates
+    setAllHighlightedWords((prev) => [
+      ...new Set([...prev, ...highlightedWords]) // Ensure no duplicates are added
+    ]);
 
-    // Cycle through the card contents based on clicks
-    setCardContentIndex((prevIndex) => (prevIndex + 1) % cardContents.length);
+    if (progressValue < 100) {
+      setProgressValue((prevValue) => Math.min(prevValue + incrementAmount, 100));
+      setCardContentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % cardContents.length;
+
+        // Reset highlighted words for the next card
+        setHighlightedWords([]);
+
+        return nextIndex;
+      });
+    }
   }
 
   // Toggles highlight of clicked words
-  function toggleHighlight(e: React.MouseEvent<HTMLSpanElement>) {
-    const target = e.target as HTMLElement;
-    if (target.style.backgroundColor === "orange") {
-      target.style.backgroundColor = "";
-    } else {
-      target.style.backgroundColor = "orange";
-    }
+  function toggleHighlight(word: string) {
+    setHighlightedWords((prev) =>
+      prev.includes(word)
+        ? prev.filter((w) => w !== word) // Remove highlight if already highlighted
+        : [...prev, word] // Add highlight if not highlighted
+    );
   }
 
   // Render the card with clickable words for highlighting
   function renderCard(content: string) {
     const words = content.split(" ").map((word, i) => (
-      <span key={i} onClick={toggleHighlight} style={{ cursor: "pointer", marginRight: "4px" }}>
+      <span
+        key={i}
+        onClick={() => toggleHighlight(word)}
+        style={{
+          cursor: "pointer",
+          marginRight: "4px",
+          backgroundColor: highlightedWords.includes(word) ? "orange" : "transparent",
+        }}
+      >
         {word}
       </span>
     ));
-    
+
     return (
       <Card className="w-[1000px] h-[600px] flex flex-col items-center justify-center p-4 mb-4">
         <CardContent className="text-center">
@@ -87,10 +108,22 @@ function OnboardingProcess() {
             {renderCard(cardContents[cardContentIndex])}
           </div>
 
-          {/* Button to increase progress and change card content */}
-          <Button onClick={handleProgressButtonClick} className="mt-6 mx-auto">
-            Continue
-          </Button>
+          {/* Conditionally render Continue or Complete button */}
+          {progressValue < 100 ? (
+            <Button onClick={handleProgressButtonClick} className="mt-6 mx-auto">
+              Continue
+            </Button>
+          ) : (
+            <Button className="mt-6 mx-auto bg-green-500 hover:bg-green-600">
+              Complete
+            </Button>
+          )}
+
+          {/* Display the allHighlightedWords array, REMOVE AS THIS IS ONLY FOR DEBUGGING PURPOSES */}
+          <div className="mt-4">
+            <h3 className="text-lg font-bold">Highlighted Words:</h3>
+            <p>{allHighlightedWords.length > 0 ? allHighlightedWords.join(', ') : "No words highlighted yet"}</p>
+          </div>
         </div>
       )}
     </div>
