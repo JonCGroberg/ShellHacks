@@ -67,7 +67,7 @@ const Header = () => {
                                             <NavigationMenuLink asChild>
                                                 <a
                                                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
-                                                    href="/"
+                                                    href="/Story"
                                                 >
                                                     <div className="text-sm font-medium leading-none">Story Scrolls</div>
                                                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -80,7 +80,7 @@ const Header = () => {
                                             <NavigationMenuLink asChild>
                                                 <a
                                                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-orange-100 hover:text-orange-600 focus:bg-orange-100 focus:text-orange-600"
-                                                    href="/"
+                                                    href="/Chatbuddy"
                                                 >
                                                     <div className="text-sm font-medium leading-none">Personalized AI Friend</div>
                                                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
