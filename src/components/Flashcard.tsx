@@ -1,6 +1,9 @@
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { SpeakerLoudIcon } from "@radix-ui/react-icons";
+import { motion } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
+import { SpeakerLoudIcon } from '@radix-ui/react-icons';
+import usePlayAudio from '@/hooks/usePlayAudio'; // Import the custom hook
+import { Loader } from 'lucide-react';
+import PlayAudioButton from './PlayAudioButton';
 
 interface CardComponentProps {
     word: string;
@@ -8,7 +11,6 @@ interface CardComponentProps {
     translation: string;
     isFlipped: boolean;
     onFlip: () => void;
-    onPlayAudio: () => void;
 }
 
 export default function Flashcard({
@@ -17,8 +19,9 @@ export default function Flashcard({
     translation,
     isFlipped,
     onFlip,
-    onPlayAudio,
 }: CardComponentProps) {
+    const { playAudio, isLoading, isPlaying } = usePlayAudio(); // Use the custom hook
+
     return (
         <motion.div className="relative w-full" style={{ perspective: 1000 }}>
             <motion.div
@@ -26,12 +29,12 @@ export default function Flashcard({
                 onClick={onFlip}
                 animate={{ rotateY: isFlipped ? 180 : 0 }}
                 transition={{ duration: 0.6 }}
-                style={{ transformStyle: "preserve-3d" }}
+                style={{ transformStyle: 'preserve-3d' }}
             >
                 {/* Front of the card */}
                 <motion.div
                     className="absolute w-full h-full"
-                    style={{ backfaceVisibility: "hidden" }}
+                    style={{ backfaceVisibility: 'hidden' }}
                 >
                     <Card className="w-full h-full">
                         <CardContent className="p-6 h-full">
@@ -42,19 +45,16 @@ export default function Flashcard({
                                     </p>
                                 </div>
                                 <div
-                                    className="text-sm mx-auto bg-blue-500 p-2 rounded-full text-white hover:bg-blue-700 transition-colors duration-200 justify-center text-center flex gap-2"
+                                className='flex items-center justify-center'
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        onPlayAudio();
                                     }}
                                 >
-                                    <button aria-label="Play Audio">
-                                        <SpeakerLoudIcon className="w-6 h-6" />
-                                    </button>
+                                    <div className="mx-auto">
+                                        <PlayAudioButton text={example} />
+                                    </div>
                                 </div>
-                                <div className="mx-auto text-sm text-grey-500 pb-4">
-                                    Tap to flip
-                                </div>
+                                <div className="mx-auto text-sm text-grey-500 pb-4">Tap to flip</div>
                             </div>
                         </CardContent>
                     </Card>
@@ -64,18 +64,17 @@ export default function Flashcard({
                 <motion.div
                     className="absolute w-full h-full bg-orange-100"
                     style={{
-                        backfaceVisibility: "hidden",
-                        transform: "rotateY(180deg)",
+                        backfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
                     }}
                 >
                     <Card className="w-full h-full">
                         <CardContent className="p-6 h-full">
                             <div className="flex flex-col h-full">
                                 <div className="flex-grow text-center space-y-4">
-                                    <h2 className="text-2xl font-bold text-orange-600">
-                                        {translation}
-                                    </h2>
+                                    <h2 className="text-2xl font-bold text-orange-600">{translation}</h2>
                                 </div>
+                                <div className="mx-auto text-sm text-grey-500 pb-4">Tap to flip</div>
                             </div>
                         </CardContent>
                     </Card>
@@ -87,7 +86,7 @@ export default function Flashcard({
 
 // Helper function to highlight the word in the sentence
 const highlightWordInSentence = (sentence: string, word: string) => {
-    const parts = sentence.split(new RegExp(`(${word})`, "gi"));
+    const parts = sentence.split(new RegExp(`(${word})`, 'gi'));
     return (
         <>
             {parts.map((part, index) =>
