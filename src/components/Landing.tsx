@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { BookOpen, Brain, Lightbulb, Rocket } from "lucide-react"
 // import Image from "astro/components/Image.astro"
 
+
+
 export default function LandingPage() {
 //   useEffect(() => {
 //     console.log('Fetching data from the API...');
@@ -34,8 +36,9 @@ export default function LandingPage() {
                 LinguaLeap uses advanced AI to create a personalized learning experience.
                 Learn in context, using words you already know, through AI-generated stories.
               </p>
-              <Button className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6">
-                Start Learning Now
+              <Button 
+                className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6" > 
+                <a href="/Onboarding">Start Learning Now</a>     
               </Button>
             </div>
             <div className="lg:w-1/2">
