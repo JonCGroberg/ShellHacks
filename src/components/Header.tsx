@@ -135,9 +135,10 @@ const Header = () => {
                                 <DropdownMenuItem>DE</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu> */}
-                        <Button onClick={()=> navigate("http://3.147.36.237:3000/login")} className="bg-orange-500 text-white hover:bg-orange-600">
+                        <Button onClick={() => navigate("/login")} className="bg-orange-500 text-white hover:bg-orange-600">
                             Sign Up
                         </Button>
+
                         <Sheet>
                             <SheetTrigger asChild>
                                 <Button className="md:hidden" variant="ghost" size="icon">

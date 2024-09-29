@@ -1,6 +1,5 @@
 import { Globe, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "../components/Link"
 import { useState, useEffect, forwardRef } from "react"
 import type { ForwardedRef, ElementRef, ComponentPropsWithoutRef } from "react"
 import {
@@ -20,16 +19,19 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { navigate } from "astro:transitions/client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { log } from "node_modules/astro/dist/core/logger/core"
-
+import { logout } from "@/lib/utils"
+import { app } from "src/firebase/client"
 
 const Header = () => {
-    const [activeTab, setActiveTab] = useState('cards');
+    const [activeTab, setActiveTab] = useState('');
     useEffect(() => {
         const handlePageTransition = () => {
             console.log('Page transition event fired');
             const pathname = window.location.pathname;
-            if (pathname.includes('/cards')) {
+            if (pathname.includes('/dashboard')) {
+                setActiveTab('dashboard');
+            }
+            else if (pathname.includes('/cards')) {
                 setActiveTab('cards');
             } else if (pathname.includes('/stories')) {
                 setActiveTab('stories');
@@ -48,62 +50,73 @@ const Header = () => {
         };
     }, []);
 
-return (
-    <header className=" py-4">
-        <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
-                {/* Logo and Branding */}
-                <div className="flex items-center space-x-4 cursor-pointer" onClick={() => navigate('/')}>
-                    <Globe className="h-8 w-8 text-orange-500" />
-                    <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
+    return (
+        <header className=" py-4">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
+                    {/* Logo and Branding */}
+                    <div className="flex items-center space-x-4 cursor-pointer col-span-1" onClick={() => navigate('/')}>
+                        <Globe className="h-8 w-8 text-orange-500" />
+                        <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
+                    </div>
+
+                    {/* Tabs for Navigation */}
+                    <Tabs value={activeTab} className="col-span-2">
+                        <TabsList className="flex justify-center">
+                            <TabsTrigger
+                                value="dashboard"
+                                onClick={() => {
+                                    setActiveTab('dashboard');
+                                    navigate('/dashboard');
+                                    document.title = 'Dashboard';
+                                }}
+                            >
+                                Dashboard
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="cards"
+                                onClick={() => {
+                                    setActiveTab('cards');
+                                    navigate('/cards');
+                                    document.title = 'Card Swipes';
+                                }}
+                            >
+                                Card Swipes
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="stories"
+                                onClick={() => {
+                                    setActiveTab('stories');
+                                    navigate('/stories');
+                                    document.title = 'Story Scrolls';
+                                }}
+                            >
+                                Story Scrolls
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="conversations"
+                                onClick={() => {
+                                    setActiveTab('conversations');
+                                    navigate('/conversations');
+                                    document.title = 'Conversations';
+                                }}
+                            >
+                                Conversations
+                            </TabsTrigger>
+
+                        </TabsList>
+                    </Tabs>
+                    {/* Action Buttons */}
+                    <div className="flex w-full justify-end">
+                        <Button onClick={() => logout(app)} className="bg-orange-500 text-white hover:bg-orange-600  col-span-1">
+                            Logout
+                        </Button>
+                    </div>
                 </div>
 
-                {/* Tabs for Navigation */}
-                <Tabs value={activeTab} className="col-span-1">
-                    <TabsList className="flex justify-center">
-                        <TabsTrigger
-                            value="cards"
-                            onClick={() => {
-                                setActiveTab('cards');
-                                navigate('/cards');
-                                document.title = 'Card Swipes';
-                            }}
-                        >
-                            Card Swipes
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="stories"
-                            onClick={() => {
-                                setActiveTab('stories');
-                                navigate('/stories');
-                                document.title = 'Story Scrolls';
-                            }}
-                        >
-                            Story Scrolls
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="conversations"
-                            onClick={() => {
-                                setActiveTab('conversations');
-                                navigate('/conversations');
-                                document.title = 'Conversations';
-                            }}
-                        >
-                            Conversations
-                        </TabsTrigger>
-                    </TabsList>
-                </Tabs>
-                {/* Action Buttons */}
-                <div className="flex w-full justify-end">
-                    <Button onClick={() => navigate("http://localhost:3000/logout")} className="bg-orange-500 text-white hover:bg-orange-600  col-span-1">
-                        Logout
-                    </Button>
-                </div>
             </div>
-
-        </div>
-    </header>
-)
+        </header>
+    )
 }
 
 const ListItem = forwardRef<

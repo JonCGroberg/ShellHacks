@@ -8,9 +8,9 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
-import { logout } from '@/utils/logout'
-import { Cookie } from 'lucide-react'
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import { logout } from '@/lib/utils'
+import { app } from 'src/firebase/client'
 
 const firebaseConfig = {
     apiKey: "AIzaSyAWY7JVT8SXo0_ROK1wRO5aw55cs1iBcsA",
@@ -22,7 +22,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 
@@ -35,13 +34,18 @@ export default function FirebaseAuthComponent() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            console.log('User:', currentUser)
-            fetch('http://3.147.36.237:3000/callback', {
-                method: 'GET',
-                headers: {
-                  'Authorization': `Bearer ${user?.accessToken}` // Include ID token in request
-                }
-              });
+            Cookies.set('uid', currentUser?.uid ?? '')
+            Cookies.set('email', currentUser?.email ?? '')
+            Cookies.set('displayName', currentUser?.displayName ?? '')
+            Cookies.set('photoURL', currentUser?.photoURL ?? '')
+            console.log('UID:', currentUser?.uid)
+            // console.log(currentUser)
+            // fetch('http://3.147.36.237:3000/callback', {
+            //     method: 'POST',
+            //     headers: {
+            //       'UID': `${user?.uid}` // Include ID token in request
+            //     }
+            //   });
         });
         return () => unsubscribe()
     }, [])
@@ -82,8 +86,7 @@ export default function FirebaseAuthComponent() {
 
     const handleLogout = async () => {
         try {
-            await signOut(auth)
-            logout();
+            logout(app)
             console.log('Logged out')
         } catch (error) {
             console.error('Failed to log out', error)

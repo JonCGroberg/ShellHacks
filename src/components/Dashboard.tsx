@@ -1,91 +1,109 @@
-import React from 'react';
-import { Card, CardTitle, CardContent } from '@/components/ui/card';
 
-function DashboardLayout() {
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { BookOpenIcon, LanguagesIcon, PlusIcon, BookIcon, WebcamIcon } from "lucide-react"
+
+export default function Dashboard() {
   return (
-    <div className="h-screen flex">
-      {/* Sidebar */}
-      <aside className="w-1/4 bg-gray-200 p-4">
-        <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
-        <nav className="space-y-6">
-          {/* Profile Page Button */}
-          <button className="w-3/4 p-3 text-center text-xl text-white rounded mx-auto mt-6 block hover:bg-opacity-90"
-            style={{ backgroundColor: '#FFB450' }}>
-            Profile Page
-          </button>
-
-          {/* Leaderboard Button */}
-          <button className="w-3/4 p-3 text-center text-xl text-white rounded mx-auto mt-6 block hover:bg-opacity-90"
-            style={{ backgroundColor: '#FFB450' }}>
-            Leaderboard
-          </button>
-
-          {/* Words Learned Button */}
-          <button className="w-3/4 p-3 text-center text-xl text-white rounded mx-auto mt-6 block hover:bg-opacity-90"
-            style={{ backgroundColor: '#FFB450' }}>
-            Words Learned
-          </button>
-
-          {/* Most Recent Story Button */}
-          <button className="w-3/4 p-3 text-center text-xl text-white rounded mx-auto mt-6 block hover:bg-opacity-90"
-            style={{ backgroundColor: '#FFB450' }}>
-            Most Recent Story
-          </button>
-
-          {/* Chat Messages Button */}
-          <button className="w-3/4 p-3 text-center text-xl text-white rounded mx-auto mt-6 block hover:bg-opacity-90"
-            style={{ backgroundColor: '#FFB450' }}>
-            Chat Messages
-          </button>
-        </nav>
-      </aside>
-
-      {/* Main content (cards area) */}
-      <main className="flex-grow p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Card 1 */}
-          <Card className="aspect-square h-96 w-full bg-gray-300 flex items-center justify-center">
+    <div className="flex flex-col min-h-screen bg-muted/40">
+      <main className="flex-1 grid gap-4 p-4 md:gap-8 md:p-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-4">
+              <BookOpenIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>Lessons</CardTitle>
+                <CardDescription>Track your progress through interactive lessons.</CardDescription>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-4">
+              <LanguagesIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>Vocabulary</CardTitle>
+                <CardDescription>Master new words and phrases with flashcards and quizzes.</CardDescription>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-4">
+              <PlusIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>Proficiency</CardTitle>
+                <CardDescription>Monitor your language skills and track your progress.</CardDescription>
+              </div>
+            </CardHeader>
+          </Card>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Vocabulary Mastered</CardTitle>
+              <div className="bg-muted rounded-full flex items-center justify-center aspect-square w-10 md:w-12">
+                <LanguagesIcon className="w-5 h-5" />
+              </div>
+            </CardHeader>
             <CardContent>
-              <CardTitle>Leader Board</CardTitle>
+              {/* <BarChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
-
-          {/* Card 2 */}
-          <Card className="aspect-square h-96 w-full bg-gray-300 flex items-center justify-center">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Lessons Completed</CardTitle>
+              <div className="bg-muted rounded-full flex items-center justify-center aspect-square w-10 md:w-12">
+                <BookOpenIcon className="w-5 h-5" />
+              </div>
+            </CardHeader>
             <CardContent>
-              <CardTitle>Words Learned</CardTitle>
+              {/* <LineChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
-
-          {/* Card 3 */}
-          <Card className="aspect-square h-96 w-full bg-gray-300 flex items-center justify-center">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Proficiency Levels</CardTitle>
+              <div className="bg-muted rounded-full flex items-center justify-center aspect-square w-10 md:w-12">
+                <PlusIcon className="w-5 h-5" />
+              </div>
+            </CardHeader>
             <CardContent>
-              <CardTitle>Most Recent Story</CardTitle>
+              {/* <LineChart className="w-full aspect-square" /> */}
             </CardContent>
           </Card>
-
-          {/* Card 4 */}
-          <Card className="aspect-square h-96 w-full bg-gray-300 flex items-center justify-center">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>AI Generated Stories</CardTitle>
+              <div className="bg-muted rounded-full flex items-center justify-center aspect-square w-10 md:w-12">
+                <BookIcon className="w-5 h-5" />
+              </div>
+            </CardHeader>
             <CardContent>
-              <CardTitle>Chat Messages</CardTitle>
+              {/* <LineChart className="w-full aspect-[4/3]" /> */}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Vocabulary Generated in Context</CardTitle>
+              <div className="bg-muted rounded-full flex items-center justify-center aspect-square w-10 md:w-12">
+                <LanguagesIcon className="w-5 h-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              {/* <LineChart className="w-full aspect-[4/3]" /> */}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Conversation Practice</CardTitle>
+              <div className="bg-muted rounded-full flex items-center justify-center aspect-square w-10 md:w-12">
+                <WebcamIcon className="w-5 h-5" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              {/* <LineChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
         </div>
       </main>
     </div>
-  );
+  )
 }
-
-// function Leaderboard() {
-
-//   return();
-// }
-
-// function recentWords() {
-
-//   return();
-// }
-
-
-
-export default DashboardLayout;
