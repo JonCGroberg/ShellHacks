@@ -73,7 +73,7 @@ export default function ChatRoom() {
       ]);
 
     } catch (error) {
-      console.error("Error fetching chat response:", error.message);
+      console.error("Error fetching chat response:", error);
     }
   }
 
@@ -136,7 +136,7 @@ export default function ChatRoom() {
       </Card>
 
       {/* Separate Card for Button Options */}
-      <Card className="w-[600px] h-[100px] bg-card-foreground pb-8 rounded-b-lg rounded-t-none">
+      <Card className="w-[600px] h-[100px] bg-card-foreground pb-8 rounded-b-lg rounded-t-none overflow-hidden">
         <CardContent className="h-24 p-4 flex justify-center items-center gap-2">
           {predefinedAnswers.length > 0 ? (
             predefinedAnswers.map((answer, index) => (
@@ -155,10 +155,10 @@ export default function ChatRoom() {
       </Card>
 
       {/* Cycle Button Below Second Card */}
-      <div className="mt-2">
+      <div className="mt-6">
         <Button
           onClick={cyclePredefinedAnswers}
-          className="rounded-full px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white"
+          className="rounded-full px-4 py-2 text-sm bg-orange-500 hover:bg-orange-600 text-white"
         >
           Next Questions
         </Button>
