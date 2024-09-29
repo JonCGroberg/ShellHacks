@@ -1,28 +1,29 @@
 import { Button } from "@/components/ui/button"
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BookOpen, Brain, Lightbulb, Rocket } from "lucide-react"
+import { navigate } from "astro:transitions/client";
 // import Image from "astro/components/Image.astro"
 
 
 
 export default function LandingPage() {
-//   useEffect(() => {
-//     console.log('Fetching data from the API...');
-//     fetch('http://3.147.36.237:3000/api/cards/ret-cards', {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Dummy API Response:', data);
-//     })
-//     .catch(error => {
-//         console.error('Error during API request:', error);
-//     });
-// }, []);
+  //   useEffect(() => {
+  //     console.log('Fetching data from the API...');
+  //     fetch('http://3.147.36.237:3000/api/cards/ret-cards', {
+  //         method: 'GET',
+  //         headers: {
+  //             'Content-Type': 'application/json',
+  //         },
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //         console.log('Dummy API Response:', data);
+  //     })
+  //     .catch(error => {
+  //         console.error('Error during API request:', error);
+  //     });
+  // }, []);
   return (
     <main className="flex-grow">
       <section className="bg-gradient-to-b to-white from-white py-20">
@@ -36,9 +37,9 @@ export default function LandingPage() {
                 LinguaLeap uses advanced AI to create a personalized learning experience.
                 Learn in context, using words you already know, through AI-generated stories.
               </p>
-              <Button 
-                className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6" > 
-                <a href="/Onboarding">Start Learning Now</a>     
+              <Button
+                onClick={() => { navigate("/onboarding") }}
+                className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6" >
               </Button>
             </div>
             <div className="lg:w-1/2">
@@ -127,7 +128,9 @@ export default function LandingPage() {
           <p className="text-xl text-gray-700 mb-12">
             Join thousands of learners who have accelerated their language skills with LinguaLeap.
           </p>
-          <Button className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6">
+          <Button className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6"
+            onClick={() => { navigate("/onboarding") }}
+          >
             Get Started for Free
           </Button>
         </div>
@@ -136,7 +139,7 @@ export default function LandingPage() {
   )
 }
 
-function FeatureCard({ icon, title, description }:{ icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
     <Card className="flex flex-col items-center text-center justify-center">
       <CardHeader className="">
