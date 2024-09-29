@@ -49,6 +49,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
+              <CardTitle className="text-4xl md:text-5xl font-bold">3</CardTitle>
               {/* <LineChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
@@ -72,6 +73,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
+              <CardTitle className="text-4xl md:text-5xl font-bold">0</CardTitle>
               {/* <LineChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
@@ -87,6 +89,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
+              <CardTitle className="text-4xl md:text-5xl font-bold">0</CardTitle>
               {/* <LineChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
@@ -98,6 +101,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
+              <CardTitle className="text-4xl md:text-5xl font-bold">0</CardTitle>
               {/* <LineChart className="w-full aspect-square" /> */}
             </CardContent>
           </Card>
@@ -110,6 +114,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
+              <CardTitle className="text-4xl md:text-5xl font-bold">0</CardTitle>
               {/* <LineChart className="w-full aspect-[4/3]" /> */}
             </CardContent>
           </Card>
