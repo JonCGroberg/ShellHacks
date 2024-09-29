@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 function OnboardingProcess() {
   const [showSlider, setShowSlider] = useState(true); // Initially show the slider
-  const [sliderValue, setSliderValue] = useState(5);
+  const [sliderValue, setSliderValue] = useState(5); // Start with a default slider value
   const [progressValue, setProgressValue] = useState(0); // Start at 0 progress
   const incrementAmount = 35; // Customize this value for progress bar
   const [cardContentIndex, setCardContentIndex] = useState(0); // Tracks current card content
@@ -24,6 +24,22 @@ function OnboardingProcess() {
   // Handles the slider value change
   function handleSliderChange(value: number[]) {
     setSliderValue(value[0]);
+  }
+
+  // Function to return the appropriate image based on slider value (exact ranges specified)
+  function getImageForSliderValue(value: number) {
+    if (value >= 0 && value <= 24) return '/assets/seedling.png';        // Slider value from 0 to 24
+    if (value >= 25 && value <= 49) return '/assets/sprout.png';         // Slider value from 25 to 49
+    if (value >= 50 && value <= 74) return '/assets/youngTree.png';      // Slider value from 50 to 74
+    if (value >= 75 && value <= 100) return '/assets/tree.png';          // Slider value from 75 to 100
+  }
+
+  // Function to return the appropriate text label based on slider value
+  function getLabelForSliderValue(value: number) {
+    if (value >= 0 && value <= 24) return 'Beginner';
+    if (value >= 25 && value <= 49) return 'Novice';
+    if (value >= 50 && value <= 74) return 'Intermediate';
+    if (value >= 75 && value <= 100) return 'Advanced';
   }
 
   // Handles when the button under the slider is clicked
@@ -53,11 +69,17 @@ function OnboardingProcess() {
 
   // Toggles highlight of clicked words
   function toggleHighlight(word: string) {
-    setHighlightedWords((prev) =>
-      prev.includes(word)
-        ? prev.filter((w) => w !== word) // Remove highlight if already highlighted
-        : [...prev, word] // Add highlight if not highlighted
-    );
+    // Regular expression to remove punctuation from the beginning and end of the word
+    const cleanWord = word.replace(/^[^\w]+|[^\w]+$/g, "");
+
+    // Only highlight the cleaned word
+    if (cleanWord.length > 0) {
+      setHighlightedWords((prev) =>
+        prev.includes(cleanWord)
+          ? prev.filter((w) => w !== cleanWord) // Remove highlight if already highlighted
+          : [...prev, cleanWord] // Add highlight if not highlighted
+      );
+    }
   }
 
   // Render the card with clickable words for highlighting
@@ -69,7 +91,7 @@ function OnboardingProcess() {
         style={{
           cursor: "pointer",
           marginRight: "4px",
-          backgroundColor: highlightedWords.includes(word) ? "orange" : "transparent",
+          backgroundColor: highlightedWords.includes(word.replace(/^[^\w]+|[^\w]+$/g, "")) ? "orange" : "transparent",
         }}
       >
         {word}
@@ -90,10 +112,20 @@ function OnboardingProcess() {
       {showSlider ? (
         <div className="text-center">
           <h2 className="mb-6 text-2xl">What is Your Current Level</h2>
-          <div className="w-64 mx-auto">
-            <Slider value={[sliderValue]} onValueChange={handleSliderChange} />
+          
+          {/* Centered and Enlarged Image Above the Slider */}
+          <div className="flex flex-col items-center mb-8 p-8">
+            <img src={getImageForSliderValue(sliderValue)} alt="Slider Value" className="w-72 h-72 object-contain pb-4" />
+            <p className="text-lg font-semibold mt-4">{getLabelForSliderValue(sliderValue)}</p> {/* Display level text */}
           </div>
-          <Button onClick={handleSliderButtonClick} className="mt-6 mx-auto">
+
+          {/* Enlarged Slider */}
+          <div className="w-[600px] mx-auto"> {/* Increased width */}
+            <Slider value={[sliderValue]} onValueChange={handleSliderChange} className="h-6" /> {/* Increased slider height */}
+          </div>
+
+          {/* Enlarged Button */}
+          <Button onClick={handleSliderButtonClick} className="mt-8 mx-auto px-8 py-4 text-xl"> {/* Increased button padding and text size */}
             Confirm Knowledge Level
           </Button>
         </div>
@@ -110,16 +142,16 @@ function OnboardingProcess() {
 
           {/* Conditionally render Continue or Complete button */}
           {progressValue < 100 ? (
-            <Button onClick={handleProgressButtonClick} className="mt-6 mx-auto">
+            <Button onClick={handleProgressButtonClick} className="mt-6 mx-auto px-8 py-4 text-xl"> {/* Enlarged button */}
               Continue
             </Button>
           ) : (
-            <Button className="mt-6 mx-auto bg-green-500 hover:bg-green-600">
+            <Button className="mt-6 mx-auto bg-green-500 hover:bg-green-600 px-8 py-4 text-xl"> {/* Enlarged button */}
               Complete
             </Button>
           )}
 
-          {/* Display the allHighlightedWords array, REMOVE AS THIS IS ONLY FOR DEBUGGING PURPOSES */}
+          {/* Display the allHighlightedWords array */}
           <div className="mt-4">
             <h3 className="text-lg font-bold">Highlighted Words:</h3>
             <p>{allHighlightedWords.length > 0 ? allHighlightedWords.join(', ') : "No words highlighted yet"}</p>
