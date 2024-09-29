@@ -1,12 +1,12 @@
 // import { isLoggedIn } from '../utils/userUtils.js';
 
 
-export const onRequest = async ({ request, redirect, locals }, next) => {
+export const onRequest = async ({ request, redirect, locals }: any, next: any) => {
   const url = new URL(request.url);
   const { pathname } = url;
 
   // List of routes that don't require authentication
-  const publicRoutes = ['/login', '/favicon.ico', '/public' , 'index'];
+  const publicRoutes = ['/login', '/favicon.ico', '/public', 'index'];
 
 
   // Allow public routes to be accessed without checking the login cookie
@@ -17,7 +17,7 @@ export const onRequest = async ({ request, redirect, locals }, next) => {
   const cookies = new Map();
 
   if (cookieHeader) {
-    cookieHeader.split(';').forEach(cookie => {
+    cookieHeader.split(';').forEach((cookie: any) => {
       const [name, value] = cookie.trim().split('=');
       cookies.set(name, value);
     });
