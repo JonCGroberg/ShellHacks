@@ -49,7 +49,8 @@ export default function OnboardingProcess() {
     setShowSlider(false)
   }
 
-  async function handleProgressButtonClick() {``
+  async function handleProgressButtonClick() {
+    ``
     setAllHighlightedWords((prev) => [...new Set([...prev, ...highlightedWords])])
     try {
       const response = await fetch('http://3.147.36.237:3000/api/onboard-gen', {
@@ -78,33 +79,34 @@ export default function OnboardingProcess() {
   }
 
   function toggleHighlight(word: string) {
-    const cleanWord = word.replace(/^[^\w]+|[^\w]+$/g, "");
-
     setHighlightedWords((prev) =>
-      prev.includes(word) ? prev.filter((w) => w !== word) : [...prev, cleanWord]
+      prev.includes(word) ? prev.filter((w) => w !== word) : [...prev, word]
     )
   }
 
   function renderCard(content: string) {
-    const words = content.split(" ").map((word, i) => (
+    const words = content.split(/\b(?=\w)/).map((word, i) => (
       <span
         key={i}
-        onClick={() => toggleHighlight(word)}
-        className={`cursor-pointer inline-block mr-1 mb-1 ${
-          highlightedWords.includes(word) ? "bg-orange-300" : ""
-        }`}
+        onClick={() => toggleHighlight(word.replace(/[^\w\s]/g, ""))}  // Remove punctuation from the word when clicking
+        className={`cursor-pointer inline-block mr-1 mb-1 rounded-md hover:underline ${highlightedWords.includes(word.replace(/[^\w\s]/g, "")) ? "bg-orange-200" : ""
+          }`}
       >
         {word}
       </span>
-    ))
+    ));
 
     return (
       <Card className="w-full max-w-3xl h-[300px] shadow-md">
-        <CardContent className="p-6 h-[]] overflow-y-auto">
-          <div className="text-center leading-relaxed text-base whitespace-normal break-words">
+        <CardContent className="p-6 h-full overflow-y-auto, mx-auto flex w-full flex-wrap justify-center">
+          <div className="text-center w-full leading-relaxed text-base whitespace-normal break-words mb-auto">
             {words}
           </div>
-          <PlayAudioButton text={words.map((word) => word.props.children).join(" ")} />        </CardContent>
+
+          <div className="mt-auto">
+            <PlayAudioButton text={words.map((word) => word.props.children).join(" ")} />
+          </div>
+        </CardContent>
       </Card>
     )
   }
@@ -112,8 +114,8 @@ export default function OnboardingProcess() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 space-y-6">
       {showSlider ? (
-        <div className="text-center w-full max-w-md">
-          <h2 className="mb-6 text-2xl">What is Your Current Level</h2>
+        <div className="text-center mt-20 w-full max-w-md h-full gap-4 flex flex-wrap justify-center">
+          <h2 className="mb-6 text-2xl">What is your current level in the language you want to learn?</h2>
           <Slider
             value={[sliderValue]}
             onValueChange={handleSliderChange}
@@ -126,16 +128,17 @@ export default function OnboardingProcess() {
         </div>
       ) : (
         <div className="text-center w-full max-w-3xl space-y-6">
+          <div className="text-lg p-2">Select words you are not very familiar with</div>
           <Progress value={progressValue} className="w-full" />
 
-          {paragraphs.length > 0 ? renderCard(paragraphs[cardContentIndex]) : "Loading..."}
+          {paragraphs.length > 0 ? renderCard(paragraphs[cardContentIndex]) : <Card className="w-full max-w-3xl h-[300px] shadow-md" />}
 
           {progressValue < 100 ? (
             <Button onClick={handleProgressButtonClick}>
               Continue
             </Button>
           ) : (
-            <Button className="bg-green-500 hover:bg-green-600" onClick={()=>navigate("dashboard")}>
+            <Button className="bg-green-500 hover:bg-green-600" onClick={() => navigate("dashboard")}>
               Complete
             </Button>
           )}

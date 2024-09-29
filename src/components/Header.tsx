@@ -25,12 +25,12 @@ const Header = () => {
     return (
         <header className=" py-4">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center justify-center w-full">
-                    <div className="flex items-center space-x-4 cursor-pointer col-span-1 " onClick={() => navigate('/')}>
-                        <Globe className="h-8 w-8 text-orange-500" />
-                        <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 items-center justify-center w-full">
+                    <div className="flex items-center space-x-4 cursor-pointer col-span-1 my-auto " onClick={() => navigate('/')}>
+                        <Globe className="h-8 w-8 text-orange-500 my-auto" />
+                        <span className="text-2xl font-bold text-orange-500 my-auto">LinguaLeap</span>
                     </div>
-                    <NavigationMenu className="hidden md:flex col-span-2 mx-auto ">
+                    <NavigationMenu className="col-span-2 mx-auto ">
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>Learning Modes</NavigationMenuTrigger>
@@ -122,7 +122,7 @@ const Header = () => {
                     </NavigationMenu>
 
 
-                    <div className="flex items-center space-x-4 col-span-1 justify-end">
+                    <div className="hidden sm:flex items-center space-x-4 col-span-1 justify-end ">
                         {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="w-[70px]">
@@ -135,11 +135,11 @@ const Header = () => {
                                 <DropdownMenuItem>DE</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu> */}
-                        <Button onClick={() => navigate("/login")} className="bg-orange-500 text-white hover:bg-orange-600">
+                        <Button  onClick={() => navigate("/login")} className="bg-orange-500 text-white hover:bg-orange-600">
                             Sign Up
                         </Button>
 
-                        <Sheet>
+                        {/* <Sheet>
                             <SheetTrigger asChild>
                                 <Button className="md:hidden" variant="ghost" size="icon">
                                     <Menu className="h-6 w-6" />
@@ -161,7 +161,7 @@ const Header = () => {
                                     </Link>
                                 </nav>
                             </SheetContent>
-                        </Sheet>
+                        </Sheet> */}
                     </div>
                 </div>
             </div>

@@ -53,15 +53,22 @@ const Header = () => {
     return (
         <header className=" py-4">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-4">
                     {/* Logo and Branding */}
-                    <div className="flex items-center space-x-4 cursor-pointer col-span-1" onClick={() => navigate('/')}>
-                        <Globe className="h-8 w-8 text-orange-500" />
-                        <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
+                    <div className="flex justify-around md:justify-start items-center space-x-4 cursor-pointer col-span-1" onClick={() => navigate('/')}>
+                        <span className="flex gap-2">
+                            <Globe className="h-8 w-8 text-orange-500" />
+                            <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
+                        </span>
+                        <Button onClick={() => logout(app)} className="bg-orange-500 text-white hover:bg-orange-600  col-span-1 block md:hidden">
+                            Logout
+                        </Button>
                     </div>
 
+
+
                     {/* Tabs for Navigation */}
-                    <Tabs value={activeTab} className="col-span-2">
+                    <Tabs value={activeTab} className="order-last lg:order-none flex justify-center lg:justify-center mt-4 lg:mt-0">
                         <TabsList className="flex justify-center">
                             <TabsTrigger
                                 value="dashboard"
@@ -107,7 +114,7 @@ const Header = () => {
                         </TabsList>
                     </Tabs>
                     {/* Action Buttons */}
-                    <div className="flex w-full justify-end">
+                    <div className="lg:flex w-full hidden order-0 col-span-1  justify-end">
                         <Button onClick={() => logout(app)} className="bg-orange-500 text-white hover:bg-orange-600  col-span-1">
                             Logout
                         </Button>

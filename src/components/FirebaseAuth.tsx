@@ -31,7 +31,6 @@ export default function FirebaseAuthComponent() {
     const [password, setPassword] = useState('')
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<string | null>(null)
-    let isNewUser = false;
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -41,59 +40,97 @@ export default function FirebaseAuthComponent() {
             Cookies.set('displayName', currentUser?.displayName ?? '')
             Cookies.set('photoURL', currentUser?.photoURL ?? '')
             console.log('UID:', currentUser?.uid)
-            if (currentUser?.uid)
-                if (!isNewUser)
-                    navigate('/onboarding')
-                else (navigate('/dashboard'))
 
 
-            // console.log(currentUser)
-            // fetch('http://3.147.36.237:3000/callback', {
-            //     method: 'POST',
-            //     headers: {
-            //       'UID': `${user?.uid}` // Include ID token in request
-            //     }
-            //   });
+
+            console.log('user:', user)
+            // if (currentUser?.uid)
+            //     if (!isNewUser)
+            //         navigate('/onboarding')
+            //     else (navigate('/dashboard'))
+
+
+
         });
         return () => unsubscribe()
     }, [])
 
     const handleSignup = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log('Creating account')
-            await createUserWithEmailAndPassword(auth, email, password)
-            isNewUser = true;
-            setError(null)
+            console.log('Creating account');
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+            // Check if the user is new by comparing createdAt and lastLoginAt
+            const createdAt = userCredential.user.metadata.creationTime;
+            const lastLoginAt = userCredential.user.metadata.lastSignInTime;
+            const isNewUser = createdAt === lastLoginAt;
+
+            if (isNewUser) {
+                postUser()
+                console.log("New user detected, performing onboarding");
+                navigate('/onboarding');
+            } else {
+                console.log("Existing user detected, navigating to dashboard");
+                navigate('/dashboard');
+            }
+
+            setError(null);
         } catch (error) {
-            setError('Failed to create an account')
-            console.error(error)
+            setError('Failed to create an account');
+            console.error(error);
         }
-    }
+    };
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            isNewUser = false;
-            await signInWithEmailAndPassword(auth, email, password)
-            console.log('Logged in')
-            setError(null)
-        } catch (error) {
-            setError('Failed to log in')
-            console.error(error)
-        }
-    }
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
+            // Check if the user is new by comparing createdAt and lastLoginAt
+            const createdAt = userCredential.user.metadata.creationTime;
+            const lastLoginAt = userCredential.user.metadata.lastSignInTime;
+            const isNewUser = createdAt === lastLoginAt;
+
+            if (isNewUser) {
+                postUser()
+                console.log("New user detected, performing onboarding");
+                navigate('/onboarding');
+            } else {
+                console.log("Existing user detected, navigating to dashboard");
+                navigate('/dashboard');
+            }
+
+            setError(null);
+        } catch (error) {
+            setError('Failed to log in');
+            console.error(error);
+        }
+    };
     const handleGoogleSignIn = async () => {
         try {
-            isNewUser = false;
-            await signInWithPopup(auth, googleProvider)
-            setError(null)
+            const userCredential = await signInWithPopup(auth, googleProvider);
+
+            // Check if the user is new by comparing createdAt and lastLoginAt
+            const createdAt = userCredential.user.metadata.creationTime;
+            const lastLoginAt = userCredential.user.metadata.lastSignInTime;
+            const isNewUser = createdAt === lastLoginAt;
+
+            if (isNewUser) {
+                postUser()
+                console.log("New Google user detected, performing onboarding");
+                navigate('/onboarding');
+            } else {
+                console.log("Existing Google user detected, navigating to dashboard");
+                navigate('/dashboard');
+            }
+
+            setError(null);
         } catch (error) {
-            setError('Failed to sign in with Google')
-            console.error(error)
+            setError('Failed to sign in with Google');
+            console.error(error);
         }
-    }
+    };
 
     const handleLogout = async () => {
         try {
@@ -101,6 +138,20 @@ export default function FirebaseAuthComponent() {
             console.log('Logged out')
         } catch (error) {
             console.error('Failed to log out', error)
+        }
+    }
+
+    function postUser() {
+        console.log('Creating user')
+        console.log(user)
+        try {
+            console.log('Creating user')
+            fetch('http://3.147.36.237:3000/api/user/see-user', {
+                method: 'POST',
+                body: JSON.stringify(user)
+            });
+        } catch (error) {
+            console.error('Failed to create user')
         }
     }
 

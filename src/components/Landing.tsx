@@ -34,12 +34,11 @@ export default function LandingPage() {
                 Learn Languages with AI-Powered Precision
               </h1>
               <p className="text-xl text-gray-700 mb-8">
-                LinguaLeap uses advanced AI to create a personalized learning experience.
-                Learn in context, using words you already know, through AI-generated stories.
+                Learn in context, using words you already know, on topics your that interest you, through AI-generated stories and spaced repition flashcards.
               </p>
               <Button
                 onClick={() => { navigate("/onboarding") }}
-                className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6" >
+                className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6" > Get Started
               </Button>
             </div>
             <div className="lg:w-1/2">
