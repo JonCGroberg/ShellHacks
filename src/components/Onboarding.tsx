@@ -116,16 +116,14 @@ function OnboardingProcess() {
           {/* Centered and Enlarged Image Above the Slider */}
           <div className="flex flex-col items-center mb-8 p-8">
             <img src={getImageForSliderValue(sliderValue)} alt="Slider Value" className="w-72 h-72 object-contain pb-4" />
-            <p className="text-lg font-semibold mt-4">{getLabelForSliderValue(sliderValue)}</p> {/* Display level text */}
+            <p className="text-lg font-semibold mt-4">{getLabelForSliderValue(sliderValue)}</p> 
           </div>
 
-          {/* Enlarged Slider */}
-          <div className="w-[600px] mx-auto"> {/* Increased width */}
-            <Slider value={[sliderValue]} onValueChange={handleSliderChange} className="h-6" /> {/* Increased slider height */}
+          <div className="w-[600px] mx-auto"> 
+            <Slider value={[sliderValue]} onValueChange={handleSliderChange} className="h-6" /> 
           </div>
 
-          {/* Enlarged Button */}
-          <Button onClick={handleSliderButtonClick} className="mt-8 mx-auto px-8 py-4 text-xl"> {/* Increased button padding and text size */}
+          <Button onClick={handleSliderButtonClick} className="mt-8 mx-auto px-8 py-4 text-xl">
             Confirm Knowledge Level
           </Button>
         </div>
