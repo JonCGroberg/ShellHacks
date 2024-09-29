@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import Cookies from 'js-cookie';
 import { logout } from '@/lib/utils'
 import { app } from 'src/firebase/client'
+import { navigate } from 'astro:transitions/client'
 
 const firebaseConfig = {
     apiKey: "AIzaSyAWY7JVT8SXo0_ROK1wRO5aw55cs1iBcsA",
@@ -39,6 +40,9 @@ export default function FirebaseAuthComponent() {
             Cookies.set('displayName', currentUser?.displayName ?? '')
             Cookies.set('photoURL', currentUser?.photoURL ?? '')
             console.log('UID:', currentUser?.uid)
+            if (currentUser?.uid)
+                navigate('/dashboard')
+
             // console.log(currentUser)
             // fetch('http://3.147.36.237:3000/callback', {
             //     method: 'POST',
@@ -66,6 +70,7 @@ export default function FirebaseAuthComponent() {
         e.preventDefault()
         try {
             await signInWithEmailAndPassword(auth, email, password)
+            navigate('/dashboard')
             console.log('Logged in')
             setError(null)
         } catch (error) {

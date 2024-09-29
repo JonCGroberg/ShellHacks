@@ -4,10 +4,10 @@ type LinkComponentProps = {
   className?: string;
 };
 
-export default function Link({ href, text, className = '' }) {
+export default function Link({children}) {
   return (
-    <a href={href} className={className}>
-      {text}
+    <a href={children.href}>
+      {children}
     </a>
   );
 };

@@ -1,7 +1,6 @@
 import { Globe, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "../components/Link"
-import React from "react"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -19,6 +18,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { navigate } from "astro:transitions/client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { forwardRef } from "react"
 
 
 const Header = () => {
@@ -169,7 +169,7 @@ const Header = () => {
     )
 }
 
-const ListItem = React.forwardRef<
+const ListItem = forwardRef<
     React.ElementRef<"a">,
     React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
