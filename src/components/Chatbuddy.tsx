@@ -1,81 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 
-function Chatconvo() {
-  const [showButtons, setShowButtons] = useState(false);
-  const [selectedButton, setSelectedButton] = useState<number | null>(null); // Track the selected button
+export default function ChatRoom() {
+  // State to handle the messages
+  const [messages, setMessages] = useState([
+    { id: 1, user: "John Doe", text: "Hey there! How's it going?", align: "left", color: "bg-gray-200" },
+    { id: 2, user: "You", text: "I'm doing great, thanks for asking!", align: "right", color: "bg-blue-500 text-white" },
+    { id: 3, user: "Sarah", text: "Awesome, I'm glad to hear that! Did you catch the game last night?", align: "left", color: "bg-gray-200" },
+    { id: 4, user: "You", text: "No, I missed it. Was it a good game?", align: "right", color: "bg-blue-500 text-white" },
+  ]);
 
-  // Display the buttons after a 3-second delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowButtons(true);
-    }, 3000); // 3000ms = 3 seconds
+  // Predefined answers (button options)
+  const predefinedAnswers = [
+    "Yes, it was fantastic!",
+    "No, I didn't watch it.",
+    "What game are you talking about?",
+  ];
 
-    // Cleanup the timer when the component is unmounted
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Handle button click
-  const handleButtonClick = (buttonNumber: number) => {
-    setSelectedButton(buttonNumber); // Set the clicked button as the selected one
+  // Handle sending a message based on predefined answers
+  const sendPredefinedMessage = (text: string) => {
+    setMessages([
+      ...messages,
+      { id: messages.length + 1, user: "You", text: text, align: "right", color: "bg-blue-500 text-white" },
+    ]);
   };
 
+  useEffect(() => {
+    console.log("ChatRoom initialized.");
+  }, []);
+
   return (
-    <Card className="w-[600px] h-[750px] mx-auto my-10 p-8 shadow-lg flex flex-col justify-between bg-white border border-gray-300">
-      {/* Top Section for Text */}
-      <div className="flex-grow">
-        <CardHeader className="text-right">
-          <CardTitle className="text-2xl">Important Information</CardTitle>
+    <div className="flex flex-col h-screen bg-background p-4 items-center">
+      {/* Main Chat Card */}
+      <Card className="w-[600px] flex-1 overflow-auto mb-0">
+        <CardHeader>
+          <h2 className="text-2xl">Chatroom</h2>
         </CardHeader>
-        <CardContent>
-          <div className="w-full flex justify-end">
-            {/* Added custom hex color for the background */}
-            <p className="text-lg text-left animate-pop-up border-2 border-gray-400 p-4 rounded-[30px] w-full max-w-[90%] bg-[#FCC47B]">
-              This is some important information that is displayed to the user. After reading this, more options will appear.
-            </p>
-          </div>
+        <CardContent className="grid gap-4">
+          {messages.map((message) => (
+            <div key={message.id} className={`flex ${message.align === "right" ? "justify-end" : "justify-start"}`}>
+              <div className={`p-3 rounded-full max-w-[50%] ${message.color} break-words`}>
+                <div className="font-medium">{message.user}</div>
+                <div className="text-sm">{message.text}</div>
+              </div>
+            </div>
+          ))}
         </CardContent>
-      </div>
+      </Card>
 
-      {/* Bottom Section for Buttons */}
-      <CardFooter className="flex flex-col items-start space-y-4">
-        {showButtons && (
-          <>
-            {/* Button 1 with normal background and hover effect */}
+      {/* Separate Card for Button Options */}
+      <Card className="w-[600px] h-[100px] bg-card-foreground">
+        <CardContent className="h-24 p-4 flex justify-center items-center gap-2">
+          {predefinedAnswers.map((answer, index) => (
             <Button
-              onClick={() => handleButtonClick(1)} // Pass button number directly
-              variant="outline"
-              className={`w-3/4 transform transition-transform duration-500 ease-out bg-[#147efb] hover:bg-[#6F7BBE] rounded-full border-2 border-[#6F7BBE]
-                ${selectedButton === 1 ? "translate-y-[-200px]" : selectedButton ? "opacity-0 transition-opacity duration-700" : ""}`}
+              key={index}
+              onClick={() => sendPredefinedMessage(answer)}
+              className="rounded-full px-4 py-2 text-sm bg-blue-500 hover:bg-blue-600 text-white w-auto "
             >
-              Option 1
+              {answer}
             </Button>
-
-            {/* Button 2 with normal background and hover effect */}
-            <Button
-              onClick={() => handleButtonClick(2)} // Pass button number directly
-              variant="outline"
-              className={`w-3/4 transform transition-transform duration-500 ease-out bg-[#147efb] hover:bg-[#6F7BBE] rounded-full border-2 border-[#6F7BBE]
-                ${selectedButton === 2 ? "translate-y-[-200px]" : selectedButton ? "opacity-0 transition-opacity duration-700" : ""}`}
-            >
-              Option 2
-            </Button>
-
-            {/* Button 3 with normal background and hover effect */}
-            <Button
-              onClick={() => handleButtonClick(3)} // Pass button number directly
-              variant="outline"
-              className={`w-3/4 transform transition-transform duration-500 ease-out bg-[#147efb] hover:bg-[#6F7BBE] rounded-full border-2 border-[#6F7BBE]
-                ${selectedButton === 3 ? "translate-y-[-200px]" : selectedButton ? "opacity-0 transition-opacity duration-700" : ""}`}
-            >
-              Option 3
-            </Button>
-          </>
-        )}
-      </CardFooter>
-    </Card>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
-
-export default Chatconvo;
