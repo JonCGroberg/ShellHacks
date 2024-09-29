@@ -1,13 +1,7 @@
-type LinkComponentProps = {
-  href: string;
-  text: string;
-  className?: string;
-};
-
-export default function Link({ href, text, className = '' }) {
+export default function Link({...props}: any) {
   return (
-    <a href={href} className={className}>
-      {text}
-    </a>
+    // <a href={props.href} className={props.className}>
+    // </a>
+    <div></div>
   );
 };

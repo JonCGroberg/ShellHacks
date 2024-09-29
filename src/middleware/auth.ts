@@ -1,15 +1,13 @@
 // import { isLoggedIn } from '../utils/userUtils.js';
 
 
-export const onRequest = async ({ request, redirect, locals }, next) => {
+export const onRequest = async ({ request, redirect, locals }: any, next: any) => {
   const url = new URL(request.url);
   const { pathname } = url;
 
   // List of routes that don't require authentication
-  const publicRoutes = ['/login', '/favicon.ico', '/public'];
+  const publicRoutes = ['/login', '/favicon.ico', '/public', 'index'];
 
-  // if (pathname == '/')
-    // return redirect('/');
 
   // Allow public routes to be accessed without checking the login cookie
   if (publicRoutes.some(route => pathname == route))
@@ -19,7 +17,7 @@ export const onRequest = async ({ request, redirect, locals }, next) => {
   const cookies = new Map();
 
   if (cookieHeader) {
-    cookieHeader.split(';').forEach(cookie => {
+    cookieHeader.split(';').forEach((cookie: any) => {
       const [name, value] = cookie.trim().split('=');
       cookies.set(name, value);
     });
@@ -27,7 +25,7 @@ export const onRequest = async ({ request, redirect, locals }, next) => {
 
   const loggedIn = (cookies.get('uid') || null);
 
-  if (!loggedIn)
+  if (!loggedIn && pathname != '/')
     return redirect('/login');
 
   // If there is an auth cookie, allow the request to proceed
