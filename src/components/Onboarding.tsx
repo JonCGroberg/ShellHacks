@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import PlayAudioButton from "./PlayAudioButton"
 import { navigate } from "astro:transitions/client"
+import useSubmitCards from "@/hooks/useSubmitCards"
+import { getUserId } from "@/lib/utils"
 
 export default function OnboardingProcess() {
   const [showSlider, setShowSlider] = useState(true)
@@ -17,6 +19,7 @@ export default function OnboardingProcess() {
   const [highlightedWords, setHighlightedWords] = useState<string[]>([])
   const [allHighlightedWords, setAllHighlightedWords] = useState<string[]>([])
   const [paragraphs, setParagraphs] = useState<string[]>([])
+  const { submitCards, isLoading, error } = useSubmitCards();
 
   async function fetchParagraphs() {
     try {
@@ -110,6 +113,16 @@ export default function OnboardingProcess() {
       </Card>
     )
   }
+  async function handleCompletion() {
+    const id = await getUserId();
+    if (id === undefined) {
+      console.error("User ID not found")
+      setParagraphs(['An error occurred while trying to submit. Please try again.'])
+    } else {
+      submitCards(id, allHighlightedWords.map((word) => ({ word, proficiency: null })), allHighlightedWords.map(() => true))
+      navigate("dashboard")
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 space-y-6">
@@ -138,19 +151,19 @@ export default function OnboardingProcess() {
               Continue
             </Button>
           ) : (
-            <Button className="bg-green-500 hover:bg-green-600" onClick={() => navigate("dashboard")}>
+            <Button className="bg-green-500 hover:bg-green-600" onClick={handleCompletion}>
               Complete
             </Button>
           )}
 
-          <div className="w-full max-w-3xl">
+          {/* <div className="w-full max-w-3xl">
             <h3 className="text-lg font-bold">Highlighted Words:</h3>
             <p className="mt-2 break-words">
               {allHighlightedWords.length > 0
                 ? allHighlightedWords.join(", ")
                 : "No words highlighted yet"}
             </p>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

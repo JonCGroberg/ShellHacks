@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { SpeakerLoudIcon } from '@radix-ui/react-icons';
 import usePlayAudio from '@/hooks/usePlayAudio'; // Import the custom hook
-import { Loader } from 'lucide-react';
 import PlayAudioButton from './PlayAudioButton';
 
 interface CardComponentProps {
@@ -21,6 +19,7 @@ export default function Flashcard({
     onFlip,
 }: CardComponentProps) {
     const { playAudio, isLoading, isPlaying } = usePlayAudio(); // Use the custom hook
+
 
     return (
         <motion.div className="relative w-full" style={{ perspective: 1000 }}>

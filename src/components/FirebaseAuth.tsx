@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import { logout } from '@/lib/utils'
 import { app } from 'src/firebase/client'
 import { navigate } from 'astro:transitions/client'
+import { log } from 'node_modules/astro/dist/core/logger/core'
 
 const firebaseConfig = {
     apiKey: "AIzaSyAWY7JVT8SXo0_ROK1wRO5aw55cs1iBcsA",
@@ -40,17 +41,11 @@ export default function FirebaseAuthComponent() {
             Cookies.set('displayName', currentUser?.displayName ?? '')
             Cookies.set('photoURL', currentUser?.photoURL ?? '')
             console.log('UID:', currentUser?.uid)
-
-
-
             console.log('user:', user)
             // if (currentUser?.uid)
             //     if (!isNewUser)
             //         navigate('/onboarding')
             //     else (navigate('/dashboard'))
-
-
-
         });
         return () => unsubscribe()
     }, [])
@@ -60,19 +55,19 @@ export default function FirebaseAuthComponent() {
         try {
             console.log('Creating account');
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
+            console.log(userCredential);
             // Check if the user is new by comparing createdAt and lastLoginAt
             const createdAt = userCredential.user.metadata.creationTime;
             const lastLoginAt = userCredential.user.metadata.lastSignInTime;
             const isNewUser = createdAt === lastLoginAt;
 
             if (isNewUser) {
-                postUser()
+                await postUser(userCredential.user)
                 console.log("New user detected, performing onboarding");
-                navigate('/onboarding');
+                // navigate('/onboarding');
             } else {
                 console.log("Existing user detected, navigating to dashboard");
-                navigate('/dashboard');
+                // navigate('/dashboard');
             }
 
             setError(null);
@@ -93,12 +88,12 @@ export default function FirebaseAuthComponent() {
             const isNewUser = createdAt === lastLoginAt;
 
             if (isNewUser) {
-                postUser()
+                await postUser(userCredential.user)
                 console.log("New user detected, performing onboarding");
-                navigate('/onboarding');
+                // navigate('/onboarding');
             } else {
                 console.log("Existing user detected, navigating to dashboard");
-                navigate('/dashboard');
+                // navigate('/dashboard');
             }
 
             setError(null);
@@ -117,12 +112,12 @@ export default function FirebaseAuthComponent() {
             const isNewUser = createdAt === lastLoginAt;
 
             if (isNewUser) {
-                postUser()
+                await postUser(userCredential.user)
                 console.log("New Google user detected, performing onboarding");
-                navigate('/onboarding');
+                // navigate('/onboarding');
             } else {
                 console.log("Existing Google user detected, navigating to dashboard");
-                navigate('/dashboard');
+                // navigate('/dashboard');
             }
 
             setError(null);
@@ -141,18 +136,24 @@ export default function FirebaseAuthComponent() {
         }
     }
 
-    function postUser() {
-        console.log('Creating user')
-        console.log(user)
+    async function postUser(user: User) {
+        // console.log('Creating user')
         try {
-            console.log('Creating user')
-            fetch('http://3.147.36.237:3000/api/user/see-user', {
+            console.log('in post user')
+            console.log(user)
+            const res = await fetch('http://3.147.36.237:3000/api/user/see-user', {
                 method: 'POST',
                 body: JSON.stringify(user)
-            });
+            })
+            console.log('res', res)
+            const data = await res.json()
+            console.log(data)
+
         } catch (error) {
-            console.error('Failed to create user')
+            console.error('Failed to create user',error)
         }
+
+        return
     }
 
     return (

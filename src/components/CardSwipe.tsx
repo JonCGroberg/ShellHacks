@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Flashcard from "@/components/Flashcard";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Check, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "./ui/card";
 import { navigate } from "astro:transitions/client";
+
 
 interface VocabWord {
   word: string;
@@ -46,6 +47,30 @@ export default function CardSwipe() {
   const { toast } = useToast();
 
   const currentWord = cards[currentIndex];
+  // const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('http://3.147.36.237:3000/api/user/rcard', {
+  //         method: 'GET',
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+
+  //       const jsonData = await response.json();
+  //       setData(jsonData);
+  //       console.log('Fetched data:', jsonData);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []); // Empty dependency array ensures this runs only once when the component mounts
+
 
   // Flip the card
   const handleFlip = () => {
@@ -70,7 +95,8 @@ export default function CardSwipe() {
     if (currentIndex === cards.length - 1) {
       if (failedCards.length > 0) {
         // If we have failed cards, start again with the failed ones
-        setCards(failedCards);
+        setCards([...failedCards, cards[currentIndex]]);
+        console.log("Failed cards:", failedCards);
         setCurrentIndex(0);
         setFailedCards([]); // Reset failed cards array
         toast({
