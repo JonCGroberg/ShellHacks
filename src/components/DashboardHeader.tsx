@@ -58,7 +58,7 @@ const Header = () => {
                     <div className="flex justify-around md:justify-start items-center space-x-4 cursor-pointer col-span-1" onClick={() => navigate('/')}>
                         <span className="flex gap-2">
                             <Globe className="h-8 w-8 text-orange-500" />
-                            <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
+                            <span className="text-2xl font-bold text-orange-500">Fluencia</span>
                         </span>
                         <Button onClick={() => logout(app)} className="bg-orange-500 text-white hover:bg-orange-600  col-span-1 block md:hidden">
                             Logout

@@ -57,7 +57,7 @@ export default function LandingPage() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-12">
-            Why Choose LinguaLeap?
+            Why Choose Fluencia?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard
@@ -82,7 +82,7 @@ export default function LandingPage() {
       <section className="bg-orange-50 py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-12">
-            How LinguaLeap Works
+            How Fluencia Works
           </h2>
           <div className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
             <Card className="w-full md:w-1/3">
@@ -125,7 +125,7 @@ export default function LandingPage() {
             Ready to Start Your Language Learning Journey?
           </h2>
           <p className="text-xl text-gray-700 mb-12">
-            Join thousands of learners who have accelerated their language skills with LinguaLeap.
+            Join thousands of learners who have accelerated their language skills with Fluencia.
           </p>
           <Button className="bg-blue-500 text-white hover:bg-blue-600 text-lg px-8 py-6"
             onClick={() => { navigate("/onboarding") }}

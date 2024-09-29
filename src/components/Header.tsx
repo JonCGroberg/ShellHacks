@@ -28,7 +28,7 @@ const Header = () => {
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 items-center justify-center w-full">
                     <div className="flex items-center space-x-4 cursor-pointer col-span-1 my-auto " onClick={() => navigate('/')}>
                         <Globe className="h-8 w-8 text-orange-500 my-auto" />
-                        <span className="text-2xl font-bold text-orange-500 my-auto">LinguaLeap</span>
+                        <span className="text-2xl font-bold text-orange-500 my-auto">Fluencia</span>
                     </div>
                     <NavigationMenu className="col-span-2 mx-auto ">
                         <NavigationMenuList>

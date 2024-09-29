@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-200 text-center text-gray-600">
-          <p>&copy; 2024 LinguaLeap. All rights reserved.</p>
+          <p>&copy; 2024 Fluencia. All rights reserved.</p>
         </div>
       </div>
     </footer>
