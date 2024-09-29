@@ -49,7 +49,7 @@ export default function OnboardingProcess() {
     setShowSlider(false)
   }
 
-  async function handleProgressButtonClick() {
+  async function handleProgressButtonClick() {``
     setAllHighlightedWords((prev) => [...new Set([...prev, ...highlightedWords])])
     try {
       const response = await fetch('http://3.147.36.237:3000/api/onboard-gen', {
@@ -78,8 +78,10 @@ export default function OnboardingProcess() {
   }
 
   function toggleHighlight(word: string) {
+    const cleanWord = word.replace(/^[^\w]+|[^\w]+$/g, "");
+
     setHighlightedWords((prev) =>
-      prev.includes(word) ? prev.filter((w) => w !== word) : [...prev, word]
+      prev.includes(word) ? prev.filter((w) => w !== word) : [...prev, cleanWord]
     )
   }
 

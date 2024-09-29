@@ -25,12 +25,12 @@ const Header = () => {
     return (
         <header className=" py-4">
             <div className="container mx-auto px-4">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4 cursor-pointer" onClick={() => navigate('/')}>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center justify-center w-full">
+                    <div className="flex items-center space-x-4 cursor-pointer col-span-1 " onClick={() => navigate('/')}>
                         <Globe className="h-8 w-8 text-orange-500" />
                         <span className="text-2xl font-bold text-orange-500">LinguaLeap</span>
                     </div>
-                    <NavigationMenu className="hidden md:flex">
+                    <NavigationMenu className="hidden md:flex col-span-2 mx-auto ">
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>Learning Modes</NavigationMenuTrigger>
@@ -122,7 +122,7 @@ const Header = () => {
                     </NavigationMenu>
 
 
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 col-span-1 justify-end">
                         {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="w-[70px]">

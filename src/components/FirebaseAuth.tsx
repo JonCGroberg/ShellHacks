@@ -31,6 +31,7 @@ export default function FirebaseAuthComponent() {
     const [password, setPassword] = useState('')
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<string | null>(null)
+    let isNewUser = false;
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -41,7 +42,10 @@ export default function FirebaseAuthComponent() {
             Cookies.set('photoURL', currentUser?.photoURL ?? '')
             console.log('UID:', currentUser?.uid)
             if (currentUser?.uid)
-                navigate('/dashboard')
+                if (!isNewUser)
+                    navigate('/onboarding')
+                else (navigate('/dashboard'))
+
 
             // console.log(currentUser)
             // fetch('http://3.147.36.237:3000/callback', {
@@ -59,6 +63,7 @@ export default function FirebaseAuthComponent() {
         try {
             console.log('Creating account')
             await createUserWithEmailAndPassword(auth, email, password)
+            isNewUser = true;
             setError(null)
         } catch (error) {
             setError('Failed to create an account')
@@ -69,8 +74,8 @@ export default function FirebaseAuthComponent() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
+            isNewUser = false;
             await signInWithEmailAndPassword(auth, email, password)
-            navigate('/dashboard')
             console.log('Logged in')
             setError(null)
         } catch (error) {
@@ -81,6 +86,7 @@ export default function FirebaseAuthComponent() {
 
     const handleGoogleSignIn = async () => {
         try {
+            isNewUser = false;
             await signInWithPopup(auth, googleProvider)
             setError(null)
         } catch (error) {

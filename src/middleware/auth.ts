@@ -6,10 +6,8 @@ export const onRequest = async ({ request, redirect, locals }, next) => {
   const { pathname } = url;
 
   // List of routes that don't require authentication
-  const publicRoutes = ['/login', '/favicon.ico', '/public'];
+  const publicRoutes = ['/login', '/favicon.ico', '/public' , 'index'];
 
-  // if (pathname == '/')
-    // return redirect('/');
 
   // Allow public routes to be accessed without checking the login cookie
   if (publicRoutes.some(route => pathname == route))
@@ -27,7 +25,7 @@ export const onRequest = async ({ request, redirect, locals }, next) => {
 
   const loggedIn = (cookies.get('uid') || null);
 
-  if (!loggedIn)
+  if (!loggedIn && pathname != '/')
     return redirect('/login');
 
   // If there is an auth cookie, allow the request to proceed
