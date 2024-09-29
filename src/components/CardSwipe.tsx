@@ -6,12 +6,14 @@ import { Check, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "./ui/card";
 import { navigate } from "astro:transitions/client";
+import Cookies from "js-cookie";
 
 
 interface VocabWord {
   word: string;
   translation: string;
   example: string;
+  definition?: string;
 }
 
 const vocabList: VocabWord[] = [
@@ -47,29 +49,44 @@ export default function CardSwipe() {
   const { toast } = useToast();
 
   const currentWord = cards[currentIndex];
-  // const [data, setData] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('http://3.147.36.237:3000/api/user/rcard', {
-  //         method: 'GET',
-  //       });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(Cookies.get('uid'));
+        const response = await fetch('http://3.147.36.237:3000/api/user/rcard', {
+          method: 'POST',
+          body: JSON.stringify({ 'user_id': Cookies.get('uid') }),
+        });
 
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
 
-  //       const jsonData = await response.json();
-  //       setData(jsonData);
-  //       console.log('Fetched data:', jsonData);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
+        const data = await response.json();
 
-  //   fetchData();
-  // }, []); // Empty dependency array ensures this runs only once when the component mounts
+        console.log(data);
+
+        const combinedWords = data.cards.map((card: any, index: any) => {
+          const [translation, definition, example] = data.translations[index].split('-');
+          return {
+            word: card.Word.trim(),
+            translation: translation.trim(),
+            example: example.trim(),
+            definition: definition.trim(),
+          };
+        });
+
+        setCards(combinedWords);
+
+        console.log('Fetched data:', data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
 
   // Flip the card

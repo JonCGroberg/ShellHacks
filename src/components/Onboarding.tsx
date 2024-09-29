@@ -16,6 +16,7 @@ export default function OnboardingProcess() {
   const [progressValue, setProgressValue] = useState(0)
   const incrementAmount = 35
   const [cardContentIndex, setCardContentIndex] = useState(0)
+  const [words, setWords] = useState<Set<string>>(new Set())
   const [highlightedWords, setHighlightedWords] = useState<string[]>([])
   const [allHighlightedWords, setAllHighlightedWords] = useState<string[]>([])
   const [paragraphs, setParagraphs] = useState<string[]>([])
@@ -37,6 +38,17 @@ export default function OnboardingProcess() {
 
       const data = await response.json()
       setParagraphs(data.paragraphs[0].Content.Parts)
+
+      data.paragraphs.forEach((section: any) => {
+        section.Content.Parts.forEach((paragraph: string) => {
+          paragraph.split(" ") // Split by one or more spaces
+            .forEach(word => {
+              words.add(word);
+            });
+        });
+      });
+
+      console.log(words);
     } catch (error) {
       console.error('Error fetching paragraphs:', error)
       setParagraphs(['An error occurred while fetching content. Please try again.'])
@@ -70,6 +82,17 @@ export default function OnboardingProcess() {
 
       const data = await response.json()
       setParagraphs(data.paragraphs[0].Content.Parts)
+
+      data.paragraphs.forEach((section: any) => {
+        section.Content.Parts.forEach((paragraph: string) => {
+          paragraph.split(" ") // Split by one or more spaces
+            .forEach(word => {
+              words.add(word);
+            });
+        });
+      });
+
+      console.log(words);
     } catch (error) {
       console.error('Error fetching paragraphs:', error)
       setParagraphs(['An error occurred while fetching content. Please try again.'])
@@ -119,9 +142,17 @@ export default function OnboardingProcess() {
       console.error("User ID not found")
       setParagraphs(['An error occurred while trying to submit. Please try again.'])
     } else {
-      submitCards(id, allHighlightedWords.map((word) => ({ word, proficiency: null })), allHighlightedWords.map(() => true))
-      navigate("dashboard")
+      const difference = getUniqueWords(Array.from(words), allHighlightedWords);
+      console.log(difference);
+      submitCards(id, difference.map((word) => ({ word, proficiency: null })), difference.map(() => true))
+      navigate("/dashboard")
     }
+  }
+
+  function getUniqueWords(array1: any[], array2: any[]) {
+    const uniqueToArray1 = array1.filter(word => !array2.includes(word));
+    const uniqueToArray2 = array2.filter(word => !array1.includes(word));
+    return [...uniqueToArray1, ...uniqueToArray2];
   }
 
   return (

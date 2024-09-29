@@ -64,10 +64,10 @@ export default function FirebaseAuthComponent() {
             if (isNewUser) {
                 await postUser(userCredential.user)
                 console.log("New user detected, performing onboarding");
-                // navigate('/onboarding');
+                navigate('/onboarding');
             } else {
                 console.log("Existing user detected, navigating to dashboard");
-                // navigate('/dashboard');
+                navigate('/dashboard');
             }
 
             setError(null);
@@ -90,10 +90,10 @@ export default function FirebaseAuthComponent() {
             if (isNewUser) {
                 await postUser(userCredential.user)
                 console.log("New user detected, performing onboarding");
-                // navigate('/onboarding');
+                navigate('/onboarding');
             } else {
                 console.log("Existing user detected, navigating to dashboard");
-                // navigate('/dashboard');
+                navigate('/dashboard');
             }
 
             setError(null);
@@ -114,10 +114,10 @@ export default function FirebaseAuthComponent() {
             if (isNewUser) {
                 await postUser(userCredential.user)
                 console.log("New Google user detected, performing onboarding");
-                // navigate('/onboarding');
+                navigate('/onboarding');
             } else {
                 console.log("Existing Google user detected, navigating to dashboard");
-                // navigate('/dashboard');
+                navigate('/dashboard');
             }
 
             setError(null);
@@ -145,12 +145,9 @@ export default function FirebaseAuthComponent() {
                 method: 'POST',
                 body: JSON.stringify(user)
             })
-            console.log('res', res)
-            const data = await res.json()
-            console.log(data)
-
+            res.status === 200 ? console.log('User created') : console.error('Failed to create user')
         } catch (error) {
-            console.error('Failed to create user',error)
+            console.error('Failed to create user', error)
         }
 
         return
